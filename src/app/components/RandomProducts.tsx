@@ -53,7 +53,7 @@ console.log("data" , produkter)
         Go to another page
       </Link>
             <Link
-              href={`/produkt/${produkt?.produktnavn?.toString().replace(/\s+/g, '_') // Replace spaces with underscores
+              href={`/products/${produkt?.produktnavn?.toString().replace(/\s+/g, '_') // Replace spaces with underscores
                 .replace(/[/\.-]/g, '_') // Replace special characters with underscores
               }?pid=${produkt?.produktid}&pnavn=${produkt?.produktnavn}`}
               alt={produkt?.produktnavn || 'Product Name Unavailable'} // Use default alt text if produktnavn is undefined
@@ -82,7 +82,7 @@ console.log("data" , produkter)
                 </Link>
               </span>
               <Link
-                href={`/produkt/${produkt?.produktnavn?.toString().replace(/\s+/g, '_') // Replace spaces with underscores
+                href={`/products/${produkt?.produktnavn?.toString().replace(/\s+/g, '_') // Replace spaces with underscores
                 .replace(/[/\.-]/g, '_') // Replace special characters with underscores
               }?pid=${produkt?.produktid}&pnavn=${produkt?.produktnavn}`}
                 alt={produkt?.produktnavn || 'Product Name Unavailable'} // Use default alt text if produktnavn is undefined

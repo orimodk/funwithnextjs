@@ -1,0 +1,73 @@
+'use client'
+import { useState, useEffect } from 'react';
+import data from '../data/merged.json';
+import Link from 'next/link';
+import Image from 'next/image';
+
+function getRandomIndex() {
+  return Math.floor(Math.random() * data.produkter.length);
+}
+
+function RandomProdukter({ nrOfProducts, prodName }) {
+  const [produkter, setProdukter] = useState([]);
+
+  useEffect(() => {
+    setProdukter(data.produkter);
+  }, []);
+
+  const randomProdukter = [];
+
+  for (let i = 0; i < nrOfProducts; i++) {
+    const randomIndex = getRandomIndex();
+    randomProdukter.push(produkter[randomIndex]);
+  }
+
+  //console.log("prodName: " + prodName?.produktnavn)
+  return (
+    <div className="cards wrapper">
+      {randomProdukter.map((produkt, i) => (
+        <div key={i} className="card">
+          <div className='card-info'>
+
+            <Link href={{
+              pathname: '/produkt/' + produkt?.produktnavn.toString().replace("%20", "_").replace(/ /g, "_").replace(/\//g, "_").replace(/-/g, '_').replace(/\./g, '_').replace(/\,/g, '_'),
+              query: { pid: produkt?.produktid, pnavn: produkt?.produktnavn },
+            }} alt={produkt?.produktnavn} key={i}>
+              <div className='card-info__image'>
+                <Image
+                  src={produkt?.billedurl[0] || '/product_placeholder.svg'} // Use fallback image source
+                  alt={produkt?.produktnavn[0] || 'test'} // Use fallback alt text
+                  width={200}
+                  height={200}
+                />
+              </div>
+            </Link>
+            <div className='product-card'>
+              <span>
+                <Link  className='product-card__category' href={`/kategori/${produkt?.kategorinavn.toString().replace(/ > /g, "/")}`}>
+                  {produkt?.kategorinavn.toString().substring(produkt?.kategorinavn.toString().lastIndexOf(">") + 1)}
+                </Link>
+              </span>
+              <Link href={{
+                pathname: '/produkt/' + produkt?.produktnavn.toString().replace("%20", "_").replace(/ /g, "_").replace(/\//g, "_").replace(/-/g, '_').replace(/\./g, '_').replace(/\,/g, '_'),
+                query: { pid: produkt?.produktid, pnavn: produkt?.produktnavn },
+              }} alt={produkt?.produktnavn} key={i}>
+                <h4 className='product-card__title'>{produkt?.produktnavn.toString().substring(0,25)}</h4>
+                <div>
+                  <div>
+                    <span className={`product-card__old ${produkt?.glpris ? 'product-card__old--strike' : ''}`}>
+                      {produkt?.glpris}
+                    </span>
+                    <span className='product-card__new'> {produkt?.nypris} kr</span>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default RandomProdukter;

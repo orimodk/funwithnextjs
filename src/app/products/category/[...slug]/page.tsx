@@ -1,8 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
+import { usePathname } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 
 
@@ -22,12 +21,14 @@ function Product() {
   const router = useRouter();
   const searchParams = useSearchParams()
   const productId = searchParams.get('pid')
+  const pathname = usePathname()
+  
 
 
 
   useEffect(() => {
     // Fetch initial data from `data.json` asynchronously
-    fetch('../data/../merged.json')
+    fetch('../../data/../merged.json')
       .then((response) => response.json())
       .then((data) => setProdukter(data.produkter))
       .catch((error) => {
@@ -35,12 +36,25 @@ function Product() {
       });
   }, []);
 
-  const product = produkter.find((p) => p.produktid == productId)
+  const product = produkter.find((p) => p.kategorinavn = "Haveliv")
+
+  const decodedSlug = pathname.replace(/\//g, ' > ');
+
+  
+  console.log("decodedSlug" , decodedSlug)
+
+  const categories = produkter.filter(
+    (p) => p.kategorinavn === decodedSlug
+  );
+
+  console.log("categories" , categories)
+
   return (
     <div className="cards wrapper">
       hejeee {productId}
-      {product?.produktnavn}
-      {product?.kategorinavn}
+      {product?.produktnavn}<br />
+      path: {pathname}<br />
+      decoded:{decodedSlug}
     </div>
   );
 }

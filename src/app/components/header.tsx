@@ -10,22 +10,27 @@ const Navbar = () => {
   const links = [
     {
       id: 1,
+      url: '/',
       link: "home",
     },
     {
       id: 2,
+      url: '/download',
       link: "download",
     },
     {
       id: 3,
+      url: '/products',
       link: "products",
     },
     {
       id: 4,
+      url: '/',
       link: "experience",
     },
     {
       id: 5,
+      url: '/',
       link: "contact",
     },
   ];
@@ -46,12 +51,12 @@ const Navbar = () => {
       </div>
 
       <ul className="hidden md:flex">
-        {links.map(({ id, link }) => (
+        {links.map(({ id, url, link }) => (
           <li
             key={id}
             className="nav-links px-4 cursor-pointer capitalize font-medium text-gray-500 hover:scale-105 hover:text-white duration-200 link-underline"
           >
-            <Link href={link}>{link}</Link>
+            <Link href={url}>{link}</Link>
           </li>
         ))}
       </ul>
@@ -65,12 +70,12 @@ const Navbar = () => {
 
       {nav && (
         <ul className="flex flex-col justify-center items-center absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-black to-gray-800 text-gray-500">
-          {links.map(({ id, link }) => (
+          {links.map(({ id, url, link }) => (
             <li
               key={id}
               className="px-4 cursor-pointer capitalize py-6 text-4xl"
             >
-              <Link onClick={() => setNav(!nav)} href={link}>
+              <Link onClick={() => setNav(!nav)} href={url}>
                 {link}
               </Link>
             </li>
